@@ -31,13 +31,13 @@ crewai install
 
 To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
 
-```bash
-$ crewai run
+```python
+python3 main.py run --company_name "company_name"
 ```
 
 This command initializes the ai-poc_crew_ai Crew, assembling the agents and assigning them tasks as defined in your configuration.
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+This example, unmodified, will run the create a `output/{current_date}_{company_name}_report.md` file with the output of a research on LLMs in the root folder.
 
 ## Understanding Your Crew
 
