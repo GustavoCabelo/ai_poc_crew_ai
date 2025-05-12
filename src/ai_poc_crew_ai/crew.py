@@ -49,15 +49,25 @@ class AiPocCrewAi():
             output_file='report.md'
         )
 
-    @crew
-    def crew(self) -> Crew:
+    def build_crew(self, inputs: dict) -> Crew:
         """Creates the AiPocCrewAi crew"""
         # To learn how to add knowledge sources to your crew, check out the documentation:
         # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
+        company_name = inputs["company_name"]
+        current_date = inputs["current_date"]
 
         return Crew(
-            agents=self.agents, # Automatically created by the @agent decorator
-            tasks=self.tasks, # Automatically created by the @task decorator
+            agents=[
+                self.researcher(),
+                self.reporting_analyst()
+            ], # Automatically created by the @agent decorator
+            tasks=[
+                self.research_task(),
+                Task(
+                    config=self.tasks_config['reporting_task'], # type: ignore[index]
+                    output_file=f'output/{current_date}_{company_name}_report.md', # The output file will be created in the output directory
+                )
+            ], # Automatically created by the @task decorator
             process=Process.sequential,
             verbose=True,
             # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
